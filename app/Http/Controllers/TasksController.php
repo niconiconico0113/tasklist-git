@@ -78,7 +78,7 @@ class TasksController extends Controller
     {
         $task = Task::find($id);
 
-        return view('task.edit', [
+        return view('tasks.edit', [
             'task' => $task,
         ]);
     }

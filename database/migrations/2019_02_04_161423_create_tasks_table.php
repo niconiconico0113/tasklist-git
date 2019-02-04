@@ -13,10 +13,16 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content');
-            $table->timestamps();
+            $table->string('title');
+        });
+    }
+    
+    public function down()
+    {
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropColumn('title');
         });
     }
 
