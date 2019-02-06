@@ -14,9 +14,10 @@ class AddTitleToStatusTable extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            $table->string('status');
         });
-    }
+        // } 閉じないとダメ
+    }    
 
     /**
      * Reverse the migrations.
@@ -25,8 +26,8 @@ class AddTitleToStatusTable extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            //
+        Schema::table('tasks',function (Blueprint $table) {
+                $table->dropColumn('status');
         });
     }
 }
