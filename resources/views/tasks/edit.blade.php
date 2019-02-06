@@ -6,7 +6,7 @@
         {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
 
             <div class="form-geoup">
-                {!! Form::label('status','ステータス:') !!}
+                {!! Form::label('status', 'ステータス:') !!}
                 {!! Form::text('status', null, ['class' => 'form-control']) !!}
             </div>
                     
