@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Task;
 
 class TasksController extends Controller
@@ -25,10 +27,18 @@ class TasksController extends Controller
                 'user' => $user,
                 'tasks' => $tasks,
             ];
+        }
+        else {
+            return view('welcome',$data);
+        }
         
-        return view('tasks.index', $data);
-    }
+        
+        return view('tasks.index', [
+            'tasks' => $tasks,
+        ]);
 
+    }
+        
     /**
      * Show the form for creating a new resource.
      *
@@ -37,12 +47,11 @@ class TasksController extends Controller
     public function create()
     {
         $task = new Task;
-        
-        return view('tasks.create',[
-            'task' => $task,
-            ]);
-    }
 
+        return view('tasks.create', [
+            'task' => $task,
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -56,12 +65,13 @@ class TasksController extends Controller
             'content' => 'required|max:191',            
             ]);
             
-        $request->user()->microposts()->create([
-            'content' => $request->content,
-        ]);
+        $task = new Task;
+        $task->user_id = Auth::user()->id;
+        $task->status  =$request->status;
+        $task->content = $request->content;
+        $task->save();
 
-        return back();
-
+        return redirect('/');
     }
 
     /**
@@ -104,11 +114,12 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'status' =>'required|max:10',
+            'status' => 'required|max:10',
             'content' => 'required|max:191',
         ]);
             
         $task = Task::find($id);
+        $task->user_id = Auth::user()->id;
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
@@ -130,6 +141,6 @@ class TasksController extends Controller
             $task->delete();
         }
 
-        return back();
+        return redirect('/');
     }
 }

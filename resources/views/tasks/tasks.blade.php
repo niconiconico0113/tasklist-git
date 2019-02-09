@@ -11,6 +11,7 @@
                 </div>
                 <div>
                     @if (Auth::id() == $task->user_id)
+                    {!! Form::open(['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
                         {!! Form::submit('Delete',['class' => 'btn-danger btn-sm']) !!}
                 </div>
             </div>

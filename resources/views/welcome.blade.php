@@ -22,7 +22,7 @@
                         </div>
                     {!! Form::close() !!}
                 @endif
-                @if (count($microposts) > 0)
+                @if (count($tasks) > 0)
                     @include('tasks.tasks', ['tasks' => $tasks])
                 @endif
             </div>

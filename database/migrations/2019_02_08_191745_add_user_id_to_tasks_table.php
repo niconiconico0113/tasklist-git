@@ -28,6 +28,6 @@ class AddUserIdToTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('microposts');
+        Schema::dropIfExists('tasks');
     }
 }
