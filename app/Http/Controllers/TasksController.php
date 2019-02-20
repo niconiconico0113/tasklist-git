@@ -84,11 +84,15 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        
         $task = Task::find($id);
-
+        
+        if(\Auth::id() === $task->user_id){
         return view('tasks.show', [
             'task' => $task,
         ]);
+        }
+        return redirect('/');
     }
 
     /**
@@ -97,13 +101,17 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($user_id)
+    public function edit($id)
     {
-        $task = Task::find($user_id);
-
+        
+        $task = Task::find($id);
+        
+        if(\Auth::id() === $task->user_id){
         return view('tasks.edit', [
             'task' => $task,
         ]);
+        }
+        
     }
 
     /**
@@ -115,6 +123,7 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $this->validate($request, [
             'status' => 'required|max:10',
             'content' => 'required|max:191',
@@ -126,9 +135,11 @@ class TasksController extends Controller
         $task->content = $request->content;
         $task->save();
 
+        if(\Auth::id() === $task->user_id){
         return redirect('/');
+        }
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -137,10 +148,9 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
+        if(\Auth::id() === $task->user_id){
         $task = \App\Task::find($id);
-    
-        if (\Auth::id() ===$task->user_id) {
-            $task->delete();
+        $task->delete();
         }
 
         return redirect('/');
