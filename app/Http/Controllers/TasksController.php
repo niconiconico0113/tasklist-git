@@ -36,6 +36,8 @@ class TasksController extends Controller
         return view('tasks.index', [
             'tasks' => $tasks,
         ]);
+        
+        
 
     }
         
@@ -95,9 +97,9 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id)
     {
-        $task = Task::find($id);
+        $task = Task::find($user_id);
 
         return view('tasks.edit', [
             'task' => $task,
